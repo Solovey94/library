@@ -15,10 +15,17 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long clientId;
-
-    private Long bookId;
+    private Integer quantity;
 
     private LocalDate loanDate;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
+
 
 }
