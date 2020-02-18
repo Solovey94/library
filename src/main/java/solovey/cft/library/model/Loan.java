@@ -4,22 +4,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "client")
-public class Client {
+@Table(name = "loan")
+public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstname;
+    private Long clientId;
 
-    private String lastname;
+    private Long bookId;
 
-    private Long passport;
-
-    private String email;
+    private LocalDate loanDate;
 
 }
