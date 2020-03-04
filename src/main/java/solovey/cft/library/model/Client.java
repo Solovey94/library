@@ -14,12 +14,16 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstname;
+    @Column(name="first_name")
+    private String firstName;
 
-    private String lastname;
+    @Column(name="last_name")
+    private String lastName;
 
+    @Column(name="passport")
     private Long passport;
 
+    @Column(name="email")
     private String email;
 
 }

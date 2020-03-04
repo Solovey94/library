@@ -15,9 +15,11 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer quantity;
-
+    @Column(name="loan_date")
     private LocalDate loanDate;
+
+    @Column(name = "return_date")
+    private LocalDate returnDate;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -26,6 +28,5 @@ public class Loan {
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
-
 
 }

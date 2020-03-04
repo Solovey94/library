@@ -16,19 +16,18 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String firstname;
+    @Column(name="first_name")
+    private String firstName;
 
-    private String lastname;
+    @Column(name="last_name")
+    private String lastName;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable (
-            name = "authors_books",
+            name = "author_books",
             joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "books_id")
+            inverseJoinColumns = @JoinColumn(name = "book_id")
     )
     private Set<Book> books = new HashSet<>();
 
-    public void addBook(Book book){
-        books.add(book);
-    }
 }

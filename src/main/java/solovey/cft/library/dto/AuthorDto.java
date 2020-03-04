@@ -3,6 +3,7 @@ package solovey.cft.library.dto;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
+import solovey.cft.library.dto.groups.Details;
 
 import java.util.Set;
 
@@ -13,10 +14,12 @@ public class AuthorDto {
     private Long id;
 
     @JsonView(Details.class)
-    private String firstname;
+    private String firstName;
 
     @JsonView(Details.class)
-    private String lastname;
+    private String lastName;
+
+
 
     @JsonView(Details.class)
     private Set<BookDto> books;
