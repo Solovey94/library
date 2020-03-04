@@ -6,5 +6,8 @@ import solovey.cft.library.model.Loan;
 import java.util.List;
 
 public interface LoanRepository extends JpaRepository<Loan, Long> {
-    List<Loan> findLoansByClientId(Long clientId);
+
+    List<Loan> findByReturnDateIsNull();
+
+    List<Loan> findByClientId(Long clientId);
 }
