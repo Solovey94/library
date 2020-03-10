@@ -14,7 +14,7 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
 
     List<Author> findAll();
 
-    List<Author> findByLastName(String lastName);
+    Author findByLastName(String lastName);
 
     @Query(
             nativeQuery = true,
