@@ -33,4 +33,10 @@ public class Book {
     )
     private Set<Author> authors = new HashSet<>();
 
+    @OneToMany(
+            mappedBy = "book",
+            cascade = CascadeType.REMOVE,
+            fetch = FetchType.LAZY
+    )
+    private Set<Loan> loans;
 }
