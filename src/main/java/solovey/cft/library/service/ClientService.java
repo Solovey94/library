@@ -8,11 +8,19 @@ import java.util.List;
 
 public interface ClientService {
 
-    ClientDto addClient(ClientDto clientDto);
+    Client addClient(ClientDto clientDto);
 
-    List<ClientDto> findAllClients();
+    ClientDto add(ClientDto clientDto);
+
+    Client updateClient(ClientDto clientDto);
+
+    ClientDto update(ClientDto clientDto);
+
+    Client getClientById(Long id);
 
     ClientDto findClientById(Long id);
+
+    List<ClientDto> findAllClients();
 
     ClientDto findClientByEmail(String email);
 
@@ -22,7 +30,9 @@ public interface ClientService {
 
     List<LoanDto> findLoansByClientId(Long id);
 
-    ClientDto updateClient(ClientDto clientDto);
-
     void deleteClientById(Long id);
+
+    ClientDto convertToDto(Client client);
+
+    List<ClientDto> convertToDto(Iterable<Client> clients);
 }

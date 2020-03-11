@@ -8,17 +8,27 @@ import java.util.List;
 
 public interface AuthorService {
 
-    AuthorDto addAuthor(AuthorDto authorDto);
+    Author addAuthor(AuthorDto authorDto);
 
-    Author findAuthorById(Long id);
+    AuthorDto add(AuthorDto authorDto);
 
-    Author findAuthorByLastName(String lastName);
+    Author updateAuthor(AuthorDto authorDto);
 
-    List<Author> findAllAuthors();
+    AuthorDto update(AuthorDto authorDto);
 
-    AuthorDto updateAuthor(AuthorDto authorDto);
+    Author getAuthorById(Long id);
+
+    AuthorDto findAuthorById(Long id);
+
+    AuthorDto findAuthorByLastName(String lastName);
+
+    List<AuthorDto> findAllAuthors();
 
     void deleteAuthorById(Long id);
 
     List<BookDto> findBooksByAuthorId(Long id);
+
+    AuthorDto convertToDto(Author author);
+
+    List<AuthorDto> convertToDto(Iterable<Author> authors);
 }
