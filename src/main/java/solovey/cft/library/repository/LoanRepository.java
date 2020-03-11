@@ -10,7 +10,7 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
 
     List<Loan> findByReturnDateIsNull();
 
-    List<Loan> findByReturnDateIsNullAndIssueDateBefore(LocalDate date);
+    List<Loan> findByReturnDateIsNullAndLoanDateBefore(LocalDate date);
 
     List<Loan> findByClientId(Long clientId);
 }

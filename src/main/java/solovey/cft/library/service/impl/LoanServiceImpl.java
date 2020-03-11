@@ -107,7 +107,7 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public List<LoanDto> findExpiredLoansOrNull(LocalDate currentDate) {
         LocalDate date = currentDate.minusDays(daysForReturn);
-        List<Loan> loans = loanRepository.findByReturnDateIsNullAndIssueDateBefore(date);
+        List<Loan> loans = loanRepository.findByReturnDateIsNullAndLoanDateBefore(date);
         if (loans.size() > 0) {
             return convertToDto(loans);
         }
