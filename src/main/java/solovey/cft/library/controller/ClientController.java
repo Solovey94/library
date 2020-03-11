@@ -20,7 +20,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ClientDto addAuthor(@RequestBody ClientDto clientDto) {
+    public ClientDto addClient(@RequestBody ClientDto clientDto) {
         return clientService.add(clientDto);
     }
 
