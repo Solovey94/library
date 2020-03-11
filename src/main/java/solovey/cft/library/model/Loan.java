@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -21,12 +22,18 @@ public class Loan {
     @Column(name = "return_date")
     private LocalDate returnDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
 
+    public boolean like(Loan loan) {
+        if (!client.equals(loan.client)) return false;
+        if (!book.equals(loan.book)) return false;
+        if (!loanDate.equals(loan.loanDate)) return false;
+        return Objects.equals(returnDate, loan.returnDate);
+    }
 }
