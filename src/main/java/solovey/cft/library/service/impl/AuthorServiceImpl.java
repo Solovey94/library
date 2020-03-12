@@ -41,6 +41,7 @@ public class AuthorServiceImpl implements AuthorService {
             author = new Author();
             authorRepository.save(author);
         }
+        BeanUtils.copyProperties(authorDto, author, "id");
         return author;
     }
 
@@ -50,6 +51,7 @@ public class AuthorServiceImpl implements AuthorService {
         return convertToDto(addAuthor(authorDto));
     }
 
+    @Transactional
     @Override
     public Author getAuthorById(Long id) {
         Optional<Author> author = authorRepository.findById(id);
