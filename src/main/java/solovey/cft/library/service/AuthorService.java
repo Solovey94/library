@@ -20,6 +20,8 @@ public interface AuthorService {
 
     AuthorDto findAuthorById(Long id);
 
+    Author getAuthorOrNullByName(String firstName, String lastName);
+
     AuthorDto findAuthorByLastName(String lastName);
 
     List<AuthorDto> findAllAuthors();

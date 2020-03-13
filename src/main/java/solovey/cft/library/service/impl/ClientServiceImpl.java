@@ -39,6 +39,7 @@ public class ClientServiceImpl implements ClientService {
             client = new Client();
             clientRepository.save(client);
         }
+        BeanUtils.copyProperties(clientDto, client, "id");
         return client;
     }
 
@@ -153,7 +154,7 @@ public class ClientServiceImpl implements ClientService {
         if (loans.size() > 0) {
             return loanService.convertToDto(loans);
         }
-        throw new NotFoundException("Not found rents by element id");
+        throw new NotFoundException("Not found loans by element id");
     }
 
     @Override

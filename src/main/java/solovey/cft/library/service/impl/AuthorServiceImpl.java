@@ -51,7 +51,6 @@ public class AuthorServiceImpl implements AuthorService {
         return convertToDto(addAuthor(authorDto));
     }
 
-    @Transactional
     @Override
     public Author getAuthorById(Long id) {
         Optional<Author> author = authorRepository.findById(id);
@@ -61,10 +60,16 @@ public class AuthorServiceImpl implements AuthorService {
         throw new NotFoundException("Not found element by id " + id.toString());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public AuthorDto findAuthorById(Long id) {
         return convertToDto(getAuthorById(id));
+    }
+
+
+    public Author getAuthorOrNullByName(String firstName, String lastName) {
+        Optional<Author> author = authorRepository.findByFirstNameAndLastName(firstName, lastName);
+        return author.orElse(null);
     }
 
     @Transactional

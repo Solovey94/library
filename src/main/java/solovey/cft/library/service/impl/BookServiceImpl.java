@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import solovey.cft.library.dto.AuthorDto;
 import solovey.cft.library.dto.BookDto;
 import solovey.cft.library.dto.LoanDto;
 import solovey.cft.library.exception.InvalidRequestException;
@@ -41,8 +42,34 @@ public class BookServiceImpl implements BookService {
             book = new Book();
             bookRepository.save(book);
         }
+        BeanUtils.copyProperties(bookDto, book, "id", "authors");
+        setDependencies(book, bookDto);
         return book;
     }
+
+    private void setDependencies(Book book, BookDto bookDto) {
+        List<AuthorDto> authorsDto = bookDto.getAuthors();
+        Set<Author> authors = book.getAuthors();
+        updateAuthors(authors, authorsDto);
+        book.setAuthors(authors);
+    }
+
+    private void updateAuthors(Set<Author> authors, List<AuthorDto> authorsDto) {
+        Set<Author> newAuthors = new HashSet<>();
+        for (AuthorDto authorDto : authorsDto) {
+            String firstName = authorDto.getFirstName();
+            String lastName = authorDto.getLastName();
+            Author author = authorService.getAuthorOrNullByName(firstName, lastName);
+            if (author == null) {
+                authorDto.setId(null);
+                author = authorService.updateAuthor(authorDto);
+            }
+            newAuthors.add(author);
+            authors.add(author);
+        }
+        authors.removeIf(author -> !newAuthors.contains(author));
+    }
+
 
     @Transactional
     @Override
@@ -117,11 +144,11 @@ public class BookServiceImpl implements BookService {
     public void deleteBookById(Long id) {
         Book book = getBookById(id);
         Set<Author> authors = book.getAuthors();
-        Set<Loan> loans = book.getLoans();
+/*        Set<Loan> loans = book.getLoans();
         loans.stream().filter(loan -> loan.getReturnDate() == null).forEach(loan -> {
             throw new InvalidRequestException("Book rented now");
         });
-        loans.stream().map(Loan::getId).forEach(loanService::deleteLoanById);
+        loans.stream().map(Loan::getId).forEach(loanService::deleteLoanById);*/
         authors.removeAll(authors);
         bookRepository.save(book);
         bookRepository.deleteById(id);
