@@ -30,8 +30,9 @@ public class AuthorController {
         return authorService.findAllAuthors();
     }
 
-    @GetMapping("/{name}")
-    public AuthorDto getByName(@PathVariable("name") String lastName) {
+    @GetMapping("/name")
+    public AuthorDto findAuthorByLastName(@RequestBody AuthorDto authorDto) {
+        String lastName = authorDto.getLastName();
         return authorService.findAuthorByLastName(lastName);
     }
 

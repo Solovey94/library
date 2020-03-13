@@ -34,15 +34,17 @@ public class ClientController {
     }
 
     @GetMapping
-    public List<ClientDto> findClients(@RequestBody(required = false) ClientDto clientDto) {
-        if (clientDto == null) {
+    public List<ClientDto> findAllClients() {
             return clientService.findAllClients();
-        }
+    }
+
+    @GetMapping("/name")
+    public List<ClientDto> findClientByName(@RequestBody ClientDto clientDto) {
         String firstName = clientDto.getFirstName();
         String lastName = clientDto.getLastName();
         return clientService.findClientByName(firstName, lastName);
-
     }
+
 
     @GetMapping("/email")
     public ClientDto findClientByEmail(@RequestBody ClientDto clientDto) {
