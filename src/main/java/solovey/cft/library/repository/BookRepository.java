@@ -7,7 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
+
+    List<Book> findByTitleContains(String title);
+
     List<Book> findByTitle(String title);
 
     Optional<Book> findByIsbn(String isbn);
+
 }
