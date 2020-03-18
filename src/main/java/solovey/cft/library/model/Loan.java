@@ -1,14 +1,17 @@
 package solovey.cft.library.model;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "loan")
 public class Loan {
@@ -35,5 +38,26 @@ public class Loan {
         if (!book.equals(loan.book)) return false;
         if (!loanDate.equals(loan.loanDate)) return false;
         return Objects.equals(returnDate, loan.returnDate);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Loan loan = (Loan) o;
+
+        if (!Objects.equals(id, loan.id)) return false;
+        return like(loan);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + client.hashCode();
+        result = 31 * result + book.hashCode();
+        result = 31 * result + loanDate.hashCode();
+        result = 31 * result + (returnDate != null ? returnDate.hashCode() : 0);
+        return result;
     }
 }

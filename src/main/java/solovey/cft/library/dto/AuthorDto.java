@@ -1,12 +1,13 @@
 package solovey.cft.library.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.Set;
-
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 public class AuthorDto {
     private Long id;
 

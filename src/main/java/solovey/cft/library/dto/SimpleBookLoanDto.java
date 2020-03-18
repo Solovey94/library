@@ -1,14 +1,16 @@
 package solovey.cft.library.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 public class SimpleBookLoanDto {
     private Long id;
 

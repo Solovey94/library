@@ -1,10 +1,13 @@
 package solovey.cft.library.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 public class ClientDto {
     private Long id;
 
