@@ -37,9 +37,9 @@ public class ClientServiceImpl implements ClientService {
             client = getClientById(clientDto.getId());
         } else {
             client = new Client();
+            BeanUtils.copyProperties(clientDto, client, "id");
             clientRepository.save(client);
         }
-        BeanUtils.copyProperties(clientDto, client, "id");
         return client;
     }
 

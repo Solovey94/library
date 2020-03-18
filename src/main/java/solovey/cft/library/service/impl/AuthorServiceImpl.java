@@ -39,9 +39,9 @@ public class AuthorServiceImpl implements AuthorService {
             author = getAuthorById(authorDto.getId());
         } else {
             author = new Author();
+            BeanUtils.copyProperties(authorDto, author, "id");
             authorRepository.save(author);
         }
-        BeanUtils.copyProperties(authorDto, author, "id");
         return author;
     }
 

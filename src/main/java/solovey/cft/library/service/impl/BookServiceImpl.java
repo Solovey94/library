@@ -106,12 +106,30 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public Book updateBook(BookDto bookDto) {
-        return null;
+        Book book = getBookById(bookDto.getId());
+
+        if (bookDto.getIsbn() != null) {
+            Optional<Book> bookByIsbn = bookRepository.findByIsbn(bookDto.getIsbn());
+            if (bookByIsbn.isPresent()) {
+                if (!bookByIsbn.get().getId().equals(bookDto.getId())) {
+                    throw new InvalidRequestException("ISBN already associated with book");
+                }
+            }
+        }
+
+        BeanUtils.copyProperties(bookDto, book, "id","authors");
+        setDependencies(book, bookDto);
+        List<Book> books = bookRepository.findByTitle(bookDto.getTitle());
+        books.stream().filter(findBook -> findBook.like(book)).forEach(findBook -> {
+            throw new InvalidRequestException("Book already exist");
+        });
+
+        return  book;
     }
 
     @Override
     public BookDto update(BookDto bookDto) {
-        return null;
+        return convertToDto(bookRepository.saveAndFlush(updateBook(bookDto)));
     }
 
     @Transactional
@@ -120,7 +138,7 @@ public class BookServiceImpl implements BookService {
         if (title == null) {
             throw new InvalidRequestException("Invalid field " + "title");
         }
-        List<Book> books = bookRepository.findByTitle(title);
+        List<Book> books = bookRepository.findByTitleContains(title);
         if (books.size() > 0) {
             return convertToDto(books);
         }
@@ -130,7 +148,7 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public List<LoanDto> findRentByBookId(Long id) {
+    public List<LoanDto> findLoanByBookId(Long id) {
         Book book = getBookById(id);
         Set<Loan> rents = book.getLoans();
         if (rents.size() > 0) {
@@ -144,11 +162,11 @@ public class BookServiceImpl implements BookService {
     public void deleteBookById(Long id) {
         Book book = getBookById(id);
         Set<Author> authors = book.getAuthors();
-/*        Set<Loan> loans = book.getLoans();
+        Set<Loan> loans = book.getLoans();
         loans.stream().filter(loan -> loan.getReturnDate() == null).forEach(loan -> {
             throw new InvalidRequestException("Book rented now");
         });
-        loans.stream().map(Loan::getId).forEach(loanService::deleteLoanById);*/
+        loans.stream().map(Loan::getId).forEach(loanService::deleteLoanById);
         authors.removeAll(authors);
         bookRepository.save(book);
         bookRepository.deleteById(id);
@@ -160,6 +178,7 @@ public class BookServiceImpl implements BookService {
         BeanUtils.copyProperties(book, bookDto,   "authors");
         Set<Author> authors = book.getAuthors();
         bookDto.setAuthors(authorService.convertToDto(authors));
+
         return bookDto;
     }
 

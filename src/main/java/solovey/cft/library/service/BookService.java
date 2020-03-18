@@ -24,7 +24,7 @@ public interface BookService {
 
     List<BookDto> findBooksByTitle(String title);
 
-    List<LoanDto> findRentByBookId(Long id);
+    List<LoanDto> findLoanByBookId(Long id);
 
     void deleteBookById(Long id);
 
