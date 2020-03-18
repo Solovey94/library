@@ -1,7 +1,6 @@
 package solovey.cft.library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import solovey.cft.library.dto.LoanDto;
 import solovey.cft.library.dto.SimpleBookLoanDto;
@@ -22,7 +21,6 @@ public class LoanController {
         this.loanService = loanService;
     }
 
-
     @PostMapping
     public LoanDto addLoan(@RequestBody SimpleBookLoanDto loanDto) {
         return loanService.add(loanDto);
@@ -33,18 +31,19 @@ public class LoanController {
         return loanService.findAllLoans();
     }
 
-    @GetMapping("/{id}")
-    public LoanDto findById(@PathVariable Long id) {
+    @GetMapping("/id")
+    public LoanDto findById(@RequestBody SimpleBookLoanDto loanDto) {
+        Long id = loanDto.getId();
         return loanService.findLoanById(id);
     }
 
     @GetMapping("/noreturn")
-    public List<LoanDto> findNoReturnedRents() {
+    public List<LoanDto> findNoReturnedLoans() {
         return loanService.findNotReturnedLoans();
     }
 
     @GetMapping("/expired")
-    public List<LoanDto> findExpiredRent() {
+    public List<LoanDto> findExpiredLoan() {
         LocalDate date = LocalDate.now();
         List<LoanDto> loans = loanService.findExpiredLoansOrNull(date);
         if (loans != null) {
@@ -53,17 +52,16 @@ public class LoanController {
         throw new NotFoundException("Not found expired rents");
     }
 
-    @PutMapping("/{id}")
-    public LoanDto updateLoan(
-            @PathVariable Long id,
-            @Validated @RequestBody SimpleBookLoanDto loanDto
-    ) {
+    @PutMapping
+    public LoanDto updateLoan(@RequestBody SimpleBookLoanDto loanDto) {
+        Long id = loanDto.getId();
         loanDto.setId(id);
         return loanService.updateLoan(loanDto);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteRent(@PathVariable Long id) {
+    @DeleteMapping
+    public void deleteLoan(@RequestBody SimpleBookLoanDto loanDto) {
+        Long id = loanDto.getId();
         loanService.deleteLoanById(id);
     }
 

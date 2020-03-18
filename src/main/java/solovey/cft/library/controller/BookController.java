@@ -1,7 +1,6 @@
 package solovey.cft.library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import solovey.cft.library.dto.BookDto;
 import solovey.cft.library.dto.LoanDto;
@@ -24,36 +23,36 @@ public class BookController {
         return bookService.add(bookDto);
     }
 
-    @PutMapping("/{id}")
-    public BookDto updateClient(
-            @PathVariable Long id,
-            @Validated @RequestBody BookDto bookDto
-    ) {
+    @PutMapping
+    public BookDto updateBook(@RequestBody BookDto bookDto) {
+        Long id = bookDto.getId();
         bookDto.setId(id);
         return bookService.update(bookDto);
     }
 
     @GetMapping
-    public List<BookDto> findBooks(@RequestBody(required = false) BookDto bookDto) {
-        if (bookDto == null) {
-            return bookService.findAllBooks();
-        }
+    public List<BookDto> findBooks() {
+        return bookService.findAllBooks();
+    }
+
+    @GetMapping("/id")
+    public BookDto findBookById(@RequestBody BookDto bookDto) {
+        return bookService.findBookById(bookDto.getId());
+    }
+
+    @GetMapping("/title")
+    public List<BookDto> findBookByTitled(@RequestBody BookDto bookDto) {
         return bookService.findBooksByTitle(bookDto.getTitle());
     }
 
-    @GetMapping("/{id}")
-    public BookDto findBookById(@PathVariable Long id) {
-        return bookService.findBookById(id);
+    @GetMapping("/loans")
+    public List<LoanDto> findLoansByBookId(@RequestBody BookDto bookDto) {
+        return bookService.findLoanByBookId(bookDto.getId());
     }
 
-    @GetMapping("/{id}/loans")
-    public List<LoanDto> findRentsByBookId(@PathVariable Long id) {
-        return bookService.findRentByBookId(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable Long id) {
-        bookService.deleteBookById(id);
+    @DeleteMapping
+    public void deleteBook(@RequestBody BookDto bookDto) {
+        bookService.deleteBookById(bookDto.getId());
     }
 
 }

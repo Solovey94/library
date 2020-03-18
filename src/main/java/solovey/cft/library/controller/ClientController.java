@@ -24,11 +24,9 @@ public class ClientController {
         return clientService.add(clientDto);
     }
 
-    @PutMapping("/{id}")
-    public ClientDto updateClient(
-            @PathVariable Long id,
-            @Validated @RequestBody ClientDto clientDto
-    ) {
+    @PutMapping
+    public ClientDto updateClient(@Validated @RequestBody ClientDto clientDto) {
+        Long id = clientDto.getId();
         clientDto.setId(id);
         return clientService.update(clientDto);
     }
@@ -56,18 +54,22 @@ public class ClientController {
         return clientService.findClientByPassport(clientDto.getPassport());
     }
 
-    @GetMapping("/{id}")
-    public ClientDto findClientById(@PathVariable Long id) {
+    @GetMapping("/id")
+    public ClientDto findClientById(@RequestBody ClientDto clientDto) {
+        Long id = clientDto.getId();
         return clientService.findClientById(id);
     }
 
-    @GetMapping("/{id}/loans")
-    public List<LoanDto> findLoansByClientId(@PathVariable Long id) {
+    @GetMapping("/loans")
+    public List<LoanDto> findLoansByClientId(@RequestBody ClientDto clientDto) {
+        Long id = clientDto.getId();
         return clientService.findLoansByClientId(id);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteClient(@PathVariable Long id) {
+    @DeleteMapping
+    public void deleteClient(@RequestBody ClientDto clientDto) {
+        Long id = clientDto.getId();
         clientService.deleteClientById(id);
     }
+
 }

@@ -55,9 +55,9 @@ public class LoanServiceImpl implements LoanService {
         loan.setClient(client);
         loan.setBook(book);
         List<Loan> loansByClient = loanRepository.findByClientId(client.getId());
-        loansByClient.stream().filter(loanBook -> loanBook.like(loan)).forEach(loanBook -> {
-            throw new InvalidRequestException("Loan already exists");
-        });
+//        loansByClient.stream().filter(loanBook -> loanBook.like(loan)).forEach(loanBook -> {
+//            throw new InvalidRequestException("Loan already exists");
+//        });
         return loan;
     }
 

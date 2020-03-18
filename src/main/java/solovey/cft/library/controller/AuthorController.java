@@ -36,27 +36,28 @@ public class AuthorController {
         return authorService.findAuthorByLastName(lastName);
     }
 
-    @GetMapping("/{id}")
-    public AuthorDto findAuthorById(@PathVariable Long id) {
+    @GetMapping("/id")
+    public AuthorDto findAuthorById(@RequestBody AuthorDto authorDto) {
+        Long id = authorDto.getId();
         return authorService.findAuthorById(id);
     }
 
-    @GetMapping("/{id}/books")
-    public List<BookDto> findBooksByAuthorId(@PathVariable Long id) {
+    @GetMapping("/books")
+    public List<BookDto> findBooksByAuthorId(@RequestBody AuthorDto authorDto) {
+        Long id = authorDto.getId();
         return authorService.findBooksByAuthorId(id);
     }
 
-    @PutMapping("/{id}")
-    public AuthorDto updateAuthor(
-            @PathVariable Long id,
-            @Validated @RequestBody AuthorDto authorDto
-    ) {
+    @PutMapping()
+    public AuthorDto updateAuthor(@RequestBody AuthorDto authorDto) {
+        Long id = authorDto.getId();
         authorDto.setId(id);
         return authorService.update(authorDto);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteAuthor(@PathVariable Long id) {
+    @DeleteMapping()
+    public void deleteAuthor(@RequestBody AuthorDto authorDto) {
+        Long id = authorDto.getId();
         authorService.deleteAuthorById(id);
     }
 
