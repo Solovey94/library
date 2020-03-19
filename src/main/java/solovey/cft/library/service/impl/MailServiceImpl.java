@@ -6,9 +6,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import solovey.cft.library.dto.BookDto;
+import solovey.cft.library.service.MailService;
 
 @Service
-public class MailServiceImpl {
+public class MailServiceImpl implements MailService {
 
     private final JavaMailSender mailSender;
 
@@ -32,6 +33,5 @@ public class MailServiceImpl {
 
         mailSender.send(mailMessage);
     }
-
 
 }
