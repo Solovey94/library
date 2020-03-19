@@ -1,6 +1,7 @@
 package solovey.cft.library.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import solovey.cft.library.dto.LoanDto;
@@ -23,27 +24,32 @@ public class LoanController {
         this.loanService = loanService;
     }
 
+    @ApiOperation(value = "Return new loan")
     @PostMapping
     public LoanDto addLoan(@RequestBody SimpleBookLoanDto loanDto) {
         return loanService.add(loanDto);
     }
 
+    @ApiOperation(value = "Return all loans")
     @GetMapping
     public List<LoanDto> findAll() {
         return loanService.findAllLoans();
     }
 
+    @ApiOperation(value = "Return loan by loan_id")
     @GetMapping("/id")
     public LoanDto findById(@RequestBody SimpleBookLoanDto loanDto) {
         Long id = loanDto.getId();
         return loanService.findLoanById(id);
     }
 
+    @ApiOperation(value = "Return all loans not returned")
     @GetMapping("/noreturn")
     public List<LoanDto> findNoReturnedLoans() {
         return loanService.findNotReturnedLoans();
     }
 
+    @ApiOperation(value = "Return all loans are expired")
     @GetMapping("/expired")
     public List<LoanDto> findExpiredLoan() {
         LocalDate date = LocalDate.now();
@@ -54,6 +60,7 @@ public class LoanController {
         throw new NotFoundException("Not found expired rents");
     }
 
+    @ApiOperation(value = "Return update loan")
     @PutMapping
     public LoanDto updateLoan(@RequestBody SimpleBookLoanDto loanDto) {
         Long id = loanDto.getId();
@@ -61,6 +68,7 @@ public class LoanController {
         return loanService.updateLoan(loanDto);
     }
 
+    @ApiOperation(value = "Delete loan by loan_id")
     @DeleteMapping
     public void deleteLoan(@RequestBody SimpleBookLoanDto loanDto) {
         Long id = loanDto.getId();
