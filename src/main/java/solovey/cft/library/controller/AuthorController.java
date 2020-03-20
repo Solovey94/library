@@ -31,14 +31,14 @@ public class AuthorController {
     @ApiOperation(value = "Return new author")
     @PostMapping
     public AuthorDto addAuthor(@RequestBody AuthorDto authorDto) {
-        log.info(LOG_ADD_NEW, Author.class.toString(), authorDto.toString());
+        log.info(LOG_ADD_NEW, AuthorDto.class.toString(), authorDto.toString());
         return authorService.add(authorDto);
     }
 
     @ApiOperation(value = "Returns all authors")
     @GetMapping
     public List<AuthorDto> findAllAuthors() {
-        log.info(LOG_GET_ALL, Author.class.toString());
+        log.info(LOG_GET_ALL, AuthorDto.class.toString());
         return authorService.findAllAuthors();
     }
 
@@ -46,7 +46,7 @@ public class AuthorController {
     @GetMapping("/name/{lastName}")
     public AuthorDto findAuthorByLastName(@PathVariable String lastName) {
         AuthorDto authorDto = authorService.findAuthorByLastName(lastName);
-        log.info(LOG_GET, Author.class.toString(), authorDto.toString());
+        log.info(LOG_GET, AuthorDto.class.toString(), authorDto.toString());
         return authorService.findAuthorByLastName(lastName);
     }
 
@@ -70,7 +70,7 @@ public class AuthorController {
     public AuthorDto updateAuthor(@RequestBody AuthorDto authorDto) {
         Long id = authorDto.getId();
         authorDto.setId(id);
-        log.info(LOG_UPDATE, Author.class.toString(), authorDto.toString());
+        log.info(LOG_UPDATE, AuthorDto.class.toString(), authorDto.toString());
         return authorService.update(authorDto);
     }
 
