@@ -44,6 +44,7 @@ public class BookServiceImpl implements BookService {
         }
         BeanUtils.copyProperties(bookDto, book, "id", "authors");
         setDependencies(book, bookDto);
+        bookRepository.save(book);
         return book;
     }
 
