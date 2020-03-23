@@ -39,7 +39,7 @@ public class BookController {
     public BookDto updateBook(@RequestBody BookDto bookDto) {
         Long id = bookDto.getId();
         bookDto.setId(id);
-        log.info(LOG_UPDATE, Book.class.toString(), bookDto.toString());
+        log.info(LOG_UPDATE, BookDto.class.toString(), bookDto.toString());
         return bookService.update(bookDto);
     }
 

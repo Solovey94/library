@@ -6,5 +6,4 @@ public class ControllerMessages {
     public static final String LOG_DELETE_BY_ID = "Delete {}, with id: {}";
     public static final String LOG_GET = "Get {}, with parameters: {}";
     public static final String LOG_GET_ALL = "Get all {}";
-    public static final String LOG_GET_SET_BY = "Get set of {}, by: {}";
 }
